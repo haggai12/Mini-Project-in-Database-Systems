@@ -1,23 +1,23 @@
 
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (1, 'Yosef', 'Cohen');
-INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (2, 'Avital', 'Levi');
+INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (2, 'Avital', 'Levy');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (3, 'Daniel', 'Shapiro');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (4, 'Rachel', 'Mizrachi');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (5, 'Tamir', 'Friedman');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (6, 'Shira', 'Baruch');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (7, 'Noam', 'Goldstein');
 INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (8, 'Ilan', 'Peretz');
-INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (9, 'Michal', 'Agmon');
-INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (10, 'Eitan', 'Katz');
+INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (9, 'Han', 'Solo');
+INSERT INTO OPERATORS (Operator_ID, First_Name, Last_Name) VALUES (10, 'Luke', 'Skywalker');
 
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (1, 'Israel Electric Corporation', 'ops@iec.co.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (2, 'Netivei Israel', 'inspections@netivei.co.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (3, 'Mekorot Water Company', 'survey@mekorot.co.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (4, 'Israel Nature and Parks Authority', 'research@parks.org.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (5, 'Rafael Advanced Defense Systems', 'logistics@rafael.co.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (6, 'Haifa Municipality', 'urban@haifa.muni.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (7, 'Technion Research Labs', 'aero@technion.ac.il');
-INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (8, 'Elbit Systems', 'field@elbitsystems.com');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (50166, 'The Jedi Order', 'HighCouncil@JediOrder.gr.cor');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (112345678, 'Israel Electric Corporation', 'ops@iec.co.il');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (1138, 'Mandalorian Covert', 'armorer@mandalore.net');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (412345678, 'Israel Nature and Parks Authority', 'research@parks.org.il');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (512345678, 'Rafael Advanced Defense Systems', 'logistics@rafael.co.il');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (1980, 'Boba Fett', 'no_disintegrations@guild.corp');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (712345678, 'Technion Research Labs', 'aero@technion.ac.il');
+INSERT INTO CLIENTS (Client_ID, Client_Name, Contact_Email) VALUES (812345678, 'Elbit Systems', 'field@elbitsystems.com');
 
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (1, 'DJI', 2.7, 55.0);
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (2, 'DJI', 0.9, 46.0);
@@ -26,7 +26,8 @@ INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (5, 'Autel Robotics', 0.8, 42.0);
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (6, 'Autel Robotics', 3.0, 120.0);
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (7, 'Parrot', 0.5, 32.0);
-INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (8, 'Freefly', 6.8, 15.0);
+INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (10, 'Buzz Droid', 6.8, 15.0);
+INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (10, 'Vulture Droid', 13000, 150.0);
 
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (1, 'RGB Camera 48MP', 0.35);
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (2, 'Thermal Infrared FLIR Vue Pro R', 0.42);
@@ -36,8 +37,8 @@ INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (5, 'Gas Detector
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (6, 'Hyperspectral Headwall Nano', 0.68);
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (7, 'Magnetometer GEM GSMP-35', 0.54);
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (8, 'RGB Camera 20MP Wide', 0.22);
-INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (9, 'Thermal Infrared DJI Zenmuse H20T', 0.76);
-INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (10, 'LIDAR Livox Avia', 0.59);
+INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (9, 'Midichlorian Spectrometer', 0.68);
+INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (10, 'Kyber Crystal Resonance Detector', 0.18);
 
 INSERT INTO DRONES (Drone_ID, Serial_Number, Purchase_Date, Model_ID) VALUES (1, 'DJI-M350-00142A', '2024-03-15', 1);
 INSERT INTO DRONES (Drone_ID, Serial_Number, Purchase_Date, Model_ID) VALUES (2, 'SKD-X10-007891', '2024-06-20', 4);
@@ -51,25 +52,25 @@ INSERT INTO DRONES (Drone_ID, Serial_Number, Purchase_Date, Model_ID) VALUES (9,
 INSERT INTO DRONES (Drone_ID, Serial_Number, Purchase_Date, Model_ID) VALUES (10, 'FRF-ALT-00008F', '2025-03-01', 8);
 
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (1, 'Highway 6 Bridge Inspection', '2026-03-26', 'Inspection', 'Inspect structural integrity of support beams along southern span using thermal and RGB imaging', 'Completed', 2);
+  (1, 'Death Star Trench Recon', '2026-03-26', 'Inspection', 'Fly the trench approach along the meridian to map thermal exhaust port vulnerability and confirm proton torpedo trajectory', 'Completed', 50166);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (2, 'Haifa Port Security Survey', '2026-03-26', 'Surveillance', 'Perimeter surveillance flight over Haifa port facility during shift change hours', 'In Progress', 6);
+  (2, 'Hoth Perimeter Scan', '2026-03-26', 'Surveillance', 'Sweep Echo Base perimeter for Imperial probe droids and scout walkers in sectors 7 through 12', 'In Progress', 412345678);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (3, 'Carmel Forest Fire Assessment', '2026-03-25', 'Survey', 'Post-fire damage assessment and vegetation recovery mapping with multispectral imaging', 'Completed', 4);
+  (3, 'Endor Shield Generator Survey', '2026-03-25', 'Survey', 'Map Imperial shield generator compound on forest moon surface for strike team insertion planning', 'Completed', 412345678);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (4, 'Kinneret Water Level Scan', '2026-03-27', 'Survey', 'Shoreline mapping and water level measurement using LIDAR along the western shore', 'Scheduled', 3);
+  (4, 'Dagobah Swamp Ecosystem Scan', '2026-03-27', 'Survey', 'Full biosphere scan of Dagobah swamplands to catalog Force-sensitive flora near cave of the Dark Side', 'Scheduled', 50166);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (5, 'Negev Solar Farm Inspection', '2026-03-28', 'Inspection', 'Thermal scan of 12000 panels at Ashalim solar facility to detect hotspots and defects', 'Scheduled', 1);
+  (5, 'Mustafar Lava Flow Inspection', '2026-03-28', 'Inspection', 'Thermal scan of mining facility platforms along active lava channels to assess structural degradation', 'Scheduled', 412345678);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (6, 'Tel Aviv Coastline Erosion', '2026-03-24', 'Survey', 'High-resolution coastline mapping from Herzliya to Jaffa for erosion rate calculation', 'Completed', 6);
+  (6, 'Cloud City Tibanna Mining', '2026-03-24', 'Survey', 'Atmospheric survey of Bespin gas layers for optimal tibanna extraction depth and purity readings', 'Completed', 712345678);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (7, 'Power Line Corridor North', '2026-03-26', 'Inspection', 'Transmission tower and line inspection from Hadera to Afula using LIDAR and thermal', 'In Progress', 1);
+  (7, 'Scarif Citadel Tower Recon', '2026-03-26', 'Surveillance', 'Reconnaissance flight around Imperial data vault to map turbolaser placements and shield gate timing', 'In Progress', 512345678);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (8, 'Technion Campus 3D Mapping', '2026-03-22', 'Survey', 'Full campus photogrammetry for construction planning of new engineering building', 'Completed', 7);
+  (8, 'Coruscant Senate District Map', '2026-03-22', 'Survey', 'High-resolution 3D photogrammetry of the Jedi Temple ruins and surrounding Senate district', 'Completed', 50166);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (9, 'Dead Sea Sinkhole Monitoring', '2026-03-29', 'Survey', 'Recurring sinkhole monitoring flight along Route 90 using LIDAR and RGB', 'Pending', 4);
+  (9, 'Tatooine Sarlacc Monitoring', '2026-03-29', 'Survey', 'Recurring depth and activity scan of Great Pit of Carkoon to track sarlacc movement patterns', 'Pending', 1980);
 INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
-  (10, 'Rafael Test Range Recon', '2026-03-23', 'Surveillance', 'Pre-test range clearance and perimeter documentation flight', 'Completed', 5);
+  (10, 'Mandalore Surface Recon', '2026-03-23', 'Surveillance', 'Surface scan of bombed-out Sundari ruins to locate surviving beskar foundry sites beneath the glass', 'Completed', 1138);
 
 INSERT INTO FITS (Sensor_ID, Model_ID) VALUES (1, 1);
 INSERT INTO FITS (Sensor_ID, Model_ID) VALUES (1, 2);
