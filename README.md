@@ -4,8 +4,8 @@
 
 ---
 
-**Submitted by:** [Student Name 1] | [Student ID 1]
-                   [Student Name 2] | [Student ID 2]
+**Submitted by:** Yehuda Levy | 332300433
+                   Haggai Slater | 217388314
 
 **System:** Drone Mission Management System
 
@@ -67,8 +67,6 @@ The system manages the following core data:
 ## 3. Screen Mockups
 
 The UI prototype was built as a single-page HTML application with four interactive screens. The design follows an industrial/utilitarian aesthetic with a dark theme, monospace data readouts, and SVG-based iconography.
-
-**Link to live prototype:** [Google AI Studio / hosted link placeholder]
 
 ### Screen 1 — Fleet Overview (Dashboard)
 
