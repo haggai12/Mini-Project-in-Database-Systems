@@ -26,8 +26,8 @@ INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (5, 'Autel Robotics', 0.8, 42.0);
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (6, 'Autel Robotics', 3.0, 120.0);
 INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (7, 'Parrot', 0.5, 32.0);
-INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (10, 'Buzz Droid', 6.8, 15.0);
-INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (10, 'Vulture Droid', 13000, 150.0);
+INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (9, 'Buzz Droid', 6.8, 15.0);
+INSERT INTO DRONE_MODELS (Model_ID, Manufacturer, Max_Payload_Weight, Max_Flight_Time) VALUES (8, 'Vulture Droid', 13000, 150.0);
 
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (1, 'RGB Camera 48MP', 0.35);
 INSERT INTO SENSORS (Sensor_ID, Sensor_Type, Weight_Kg) VALUES (2, 'Thermal Infrared FLIR Vue Pro R', 0.42);
