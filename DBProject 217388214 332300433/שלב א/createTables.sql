@@ -1,0 +1,121 @@
+CREATE TABLE OPERATORS
+(
+  Operator_ID INT NOT NULL,
+  First_Name VARCHAR(25) NOT NULL,
+  Last_Name VARCHAR(25) NOT NULL,
+  PRIMARY KEY (Operator_ID)
+);
+
+CREATE TABLE CLIENTS
+(
+  Client_ID INT NOT NULL,
+  Client_Name VARCHAR(50) NOT NULL,
+  Contact_Email VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Client_ID)
+);
+
+CREATE TABLE DRONE_MODELS
+(
+  Model_ID INT NOT NULL,
+  Manufacturer VARCHAR(50) NOT NULL,
+  Model_Name VARCHAR(50) Not NULL UNIQUE,
+  Max_Payload_Weight FLOAT NOT NULL CHECK (Max_Payload_Weight > 0),
+  Max_Flight_Time FLOAT NOT NULL CHECK (Max_Flight_Time > 0),
+  PRIMARY KEY (Model_ID)
+);
+
+CREATE TABLE SENSORS
+(
+  Sensor_ID INT NOT NULL,
+  Sensor_Type VARCHAR(150) NOT NULL,
+  Weight_Kg FLOAT NOT NULL CHECK (Weight_Kg > 0),
+  PRIMARY KEY (Sensor_ID)
+);
+
+CREATE TABLE DRONES
+(
+  Drone_ID INT NOT NULL,
+  Serial_Number VARCHAR(17) NOT NULL UNIQUE,
+  Purchase_Date DATE NOT NULL,
+  Model_ID INT NOT NULL,
+  PRIMARY KEY (Drone_ID),
+  FOREIGN KEY (Model_ID) REFERENCES DRONE_MODELS(Model_ID)
+);
+
+CREATE TABLE MISSIONS
+(
+  Mission_ID INT NOT NULL,
+  Mission_Title VARCHAR(50) NOT NULL,
+  Mission_Date DATE NOT NULL,
+  Mission_Type VARCHAR(50) NOT NULL,
+  Mission_Description VARCHAR(500) NOT NULL,
+  Mission_Status VARCHAR(20) NOT NULL DEFAULT 'Pending',
+  Client_ID INT NOT NULL,
+  PRIMARY KEY (Mission_ID),
+  FOREIGN KEY (Client_ID) REFERENCES CLIENTS(Client_ID)
+);
+
+CREATE TABLE FITS 
+(
+  Sensor_ID INT NOT NULL,
+  Model_ID INT NOT NULL,
+  PRIMARY KEY (Sensor_ID, Model_ID),
+  FOREIGN KEY (Sensor_ID) REFERENCES SENSORS(Sensor_ID),
+  FOREIGN KEY (Model_ID) REFERENCES DRONE_MODELS(Model_ID)
+);
+
+CREATE TABLE OPERATOR_CERTIFICATIONS
+(
+  License_Issue_Date DATE NOT NULL,
+  License_Expiration_Date DATE NOT NULL,
+  Model_ID INT NOT NULL,
+  Operator_ID INT NOT NULL,
+  PRIMARY KEY (Model_ID, Operator_ID),
+  CHECK (License_Expiration_Date > License_Issue_Date),
+  FOREIGN KEY (Model_ID) REFERENCES DRONE_MODELS(Model_ID),
+  FOREIGN KEY (Operator_ID) REFERENCES OPERATORS(Operator_ID)
+);
+
+CREATE TABLE MISSION_ASSIGNMENTS
+(
+  Assignment_ID INT NOT NULL,
+  Operator_ID INT NOT NULL,
+  Drone_ID INT NOT NULL,
+  Mission_ID INT NOT NULL,
+  PRIMARY KEY (Assignment_ID),
+  UNIQUE (Mission_ID, Drone_ID),
+  FOREIGN KEY (Operator_ID) REFERENCES OPERATORS(Operator_ID),
+  FOREIGN KEY (Drone_ID) REFERENCES DRONES(Drone_ID),
+  FOREIGN KEY (Mission_ID) REFERENCES MISSIONS(Mission_ID)
+);
+
+CREATE TABLE ASSIGNMENT_SENSORS
+(
+  Sensor_ID INT NOT NULL,
+  Assignment_ID INT NOT NULL,
+  PRIMARY KEY (Sensor_ID, Assignment_ID),
+  FOREIGN KEY (Sensor_ID) REFERENCES SENSORS(Sensor_ID),
+  FOREIGN KEY (Assignment_ID) REFERENCES MISSION_ASSIGNMENTS(Assignment_ID)
+);
+
+CREATE TABLE MAINTENANCE_LOGS
+(
+  Log_ID INT NOT NULL,
+  Maintenance_Date DATE NOT NULL,
+  Work_Description VARCHAR(500) NOT NULL,
+  Cost NUMERIC(10, 2) NOT NULL CHECK (Cost >= 0),
+  Drone_ID INT NOT NULL,
+  PRIMARY KEY (Log_ID),
+  FOREIGN KEY (Drone_ID) REFERENCES DRONES(Drone_ID)
+);
+
+CREATE TABLE FLIGHT_ALERTS
+(
+  Alert_ID INT NOT NULL,
+  Alert_Timestamp TIMESTAMP NOT NULL, 
+  Severity_Level INT NOT NULL CHECK (Severity_Level BETWEEN 1 AND 5),
+  Alert_Message VARCHAR(300) NOT NULL,
+  Assignment_ID INT NOT NULL,
+  PRIMARY KEY (Alert_ID),
+  FOREIGN KEY (Assignment_ID) REFERENCES MISSION_ASSIGNMENTS(Assignment_ID)
+);
