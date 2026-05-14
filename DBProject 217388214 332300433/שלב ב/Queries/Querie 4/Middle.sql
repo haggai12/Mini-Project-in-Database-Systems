@@ -12,3 +12,5 @@ INSERT INTO FLIGHT_ALERTS (Alert_ID, Alert_Timestamp, Severity_Level, Alert_Mess
 (30012, '2026-05-14 13:57:29.046', 3, 'Alert # 12 for a test', 702);
 INSERT INTO FLIGHT_ALERTS (Alert_ID, Alert_Timestamp, Severity_Level, Alert_Message, Assignment_ID) VALUES
 (30013, '2026-05-14 22:15:00.000', 4, 'Alert # 13 for a test', 702);
+
+/* expecting Test part 2 qurey 4 | 2026-05-14 | 4  */

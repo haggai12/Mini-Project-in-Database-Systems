@@ -1,3 +1,8 @@
+INSERT INTO MISSIONS (Mission_ID, Mission_Title, Mission_Date, Mission_Type, Mission_Description, Mission_Status, Client_ID) VALUES
+(700, 'Test part 2 qurey 4', '2026-05-14', 'Testing', 'Test 4th qurey in part 2 of the project', 'In progress', 101);
+
+
+
 INSERT INTO MISSION_ASSIGNMENTS (Assignment_ID, Operator_ID, Drone_ID, Mission_ID) VALUES (700, 1, 1, 700);
 INSERT INTO MISSION_ASSIGNMENTS (Assignment_ID, Operator_ID, Drone_ID, Mission_ID) VALUES (701, 2, 2, 700);
 
@@ -7,3 +12,5 @@ INSERT INTO FLIGHT_ALERTS (Alert_ID, Alert_Timestamp, Severity_Level, Alert_Mess
 (30001, '2026-05-14 08:28:31.467', 4, 'Alert # 2 for a test', 700);
 INSERT INTO FLIGHT_ALERTS (Alert_ID, Alert_Timestamp, Severity_Level, Alert_Message, Assignment_ID) VALUES
 (30002, '2026-05-14 08:30:31.467', 3, 'Alert # 3 for a test', 700);
+
+/* expecting Test part 2 qurey 4 | 2026-05-14 | 1  */
