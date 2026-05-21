@@ -1,6 +1,17 @@
+
+BEGIN;
+
+SELECT * FROM missions;
+
 update missions
 set mission_status = 'Review Required'
 where m.mission_id IN (select ma.mission_id
                         from mission_assignments ma
                         JOIN flight_alerts fa ON ma.assignment_id = fa.assignment_id
                         where fa.severity_level = 5);
+
+SELECT * FROM missions;
+
+ROLLBACK;
+
+SELECT * FROM missions;
