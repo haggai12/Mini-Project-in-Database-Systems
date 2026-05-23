@@ -1,0 +1,2 @@
+create index idx_maintenance_date
+on maintenance_logs(maintenance_date);

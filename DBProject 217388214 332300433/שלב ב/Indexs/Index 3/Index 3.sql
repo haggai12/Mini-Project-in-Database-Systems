@@ -1,0 +1,2 @@
+create index idx_flight_alerts_timestamp
+on flight_alerts(alert_timestamp);
