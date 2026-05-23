@@ -1,0 +1,2 @@
+CREATE INDEX idx_flight_alerts_assignment
+ON flight_alerts(assignment_id);
