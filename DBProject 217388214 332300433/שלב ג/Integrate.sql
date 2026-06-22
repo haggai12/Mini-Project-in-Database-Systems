@@ -1,12 +1,16 @@
 -- Step 1: Enable the postgres_fdw extension to allow connecting to external PostgreSQL databases
 CREATE EXTENSION IF NOT EXISTS postgres_fdw;
 
+
+DROP SERVER IF EXISTS agriculture_server CASCADE;
+
+
 -- Step 2: Configure the connection to the remote Smart Agriculture database (DB2)
 -- Replace the host with your actual Supabase DB2 host address found under Project Settings -> Database
 CREATE SERVER agriculture_server
 FOREIGN DATA WRAPPER postgres_fdw
 OPTIONS (
-    host 'aws-1-ap-southeast-1.pooler.supabase.com', 
+    host 'aws-1-ap-southeast-1.pooler.supabase.com',
     port '6543', 
     dbname 'postgres'
 );
@@ -16,8 +20,8 @@ OPTIONS (
 CREATE USER MAPPING FOR current_user
 SERVER agriculture_server
 OPTIONS (
-    user 'postgres', 
-    password 'YOUR_DB2_PASSWORD'
+    user 'postgres.uxltbylpthdtekhddunr', 
+    password 'haggaiaaronslater'
 );
 
 -- Step 4: Import specific foreign tables from the agriculture database into the local public schema
