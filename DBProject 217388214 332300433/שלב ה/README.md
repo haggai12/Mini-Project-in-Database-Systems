@@ -28,7 +28,6 @@ python main.py
 ## צילומי מסך של המערכת בפעולה
 
 ### מסך ראשי (Dashboard)
-*(הכנס כאן צילום של המסך הראשי)*
 ![Dashboard](./screenshots/dashboard.png)
 
 ### ניהול רחפנים (CRUD)
