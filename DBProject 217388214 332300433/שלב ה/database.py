@@ -5,10 +5,10 @@ class Database:
     def __init__(self):
         # NOTE: You might need to change the dbname, user, password to match your local PostgreSQL configuration
         self.dbname = "postgres"
-        self.user = "postgres"
-        self.password = "1234" # Placeholder, user needs to update
-        self.host = "localhost"
-        self.port = "5432"
+        self.user = "postgres.futcvfuapfpibtyxnpvm"
+        self.password = "haggaiaaronslater" # Placeholder, user needs to update
+        self.host = "aws-1-ap-south-1.pooler.supabase.com"
+        self.port = "6543"
         self.connection = None
 
     def connect(self):
