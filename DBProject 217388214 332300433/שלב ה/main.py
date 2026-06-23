@@ -5,6 +5,7 @@ import customtkinter as ctk
 from database import Database
 from gui_drones import DronesFrame
 from gui_missions import MissionsFrame
+from gui_advanced import AdvancedFrame
 
 # Set the appearance mode and color theme
 ctk.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -78,9 +79,8 @@ class App(ctk.CTk):
 
     def show_advanced(self):
         self.clear_main_frame()
-        label = ctk.CTkLabel(self.main_frame, text="Advanced Queries & Procedures", font=ctk.CTkFont(size=24, weight="bold"))
-        label.pack(pady=20)
-        # Will be implemented in the next chunk...
+        self.advanced_view = AdvancedFrame(self.main_frame, self.db)
+        self.advanced_view.pack(fill="both", expand=True)
 
 if __name__ == "__main__":
     app = App()
