@@ -114,10 +114,13 @@ class DronesFrame(ctk.CTkFrame):
             return
 
         query = "INSERT INTO drones (drone_id, model_id, purchase_date, drone_status) VALUES (%s, %s, %s, %s)"
-        if self.db.execute_query(query, (d_id, m_id, date, status)):
+        success, err = self.db.execute_query(query, (d_id, m_id, date, status))
+        if success:
             messagebox.showinfo("Success", "Drone added successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to add drone:\n{err}")
 
     def update_drone(self):
         d_id = self.entry_id.get()
@@ -130,10 +133,13 @@ class DronesFrame(ctk.CTkFrame):
             return
 
         query = "UPDATE drones SET model_id=%s, purchase_date=%s, drone_status=%s WHERE drone_id=%s"
-        if self.db.execute_query(query, (m_id, date, status, d_id)):
+        success, err = self.db.execute_query(query, (m_id, date, status, d_id))
+        if success:
             messagebox.showinfo("Success", "Drone updated successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to update drone:\n{err}")
 
     def delete_drone(self):
         d_id = self.entry_id.get()
@@ -142,10 +148,13 @@ class DronesFrame(ctk.CTkFrame):
             return
 
         query = "DELETE FROM drones WHERE drone_id = %s"
-        if self.db.execute_query(query, (d_id,)):
+        success, err = self.db.execute_query(query, (d_id,))
+        if success:
             messagebox.showinfo("Success", "Drone deleted successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to delete drone:\n{err}")
 
     def clear_entries(self):
         self.entry_id.delete(0, 'end')

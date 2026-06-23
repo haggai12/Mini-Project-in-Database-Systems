@@ -46,16 +46,17 @@ class Database:
             return []
 
     def execute_query(self, query, params=None):
-        """Executes INSERT, UPDATE, DELETE queries"""
+        """Executes INSERT, UPDATE, DELETE queries. Returns (success_bool, error_message_string)"""
         conn = self.connect()
         if not conn:
-            return False
+            return False, "Connection failed"
         try:
             with conn.cursor() as cursor:
                 cursor.execute(query, params)
                 conn.commit()
-                return True
+                return True, ""
         except Error as e:
-            print(f"Error executing query: {e}")
+            error_msg = str(e)
+            print(f"Error executing query: {error_msg}")
             conn.rollback()
-            return False
+            return False, error_msg

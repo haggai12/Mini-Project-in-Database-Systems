@@ -86,7 +86,8 @@ class MissionsFrame(ctk.CTkFrame):
         '''
         records = self.db.fetch_all(query)
         for r in records:
-            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3], r[4], r[5]))
+            field_val = r[5] if r[5] is not None else ""
+            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3], r[4], field_val))
 
     def fetch_for_update(self):
         m_id = self.entry_id.get()
@@ -130,10 +131,13 @@ class MissionsFrame(ctk.CTkFrame):
             return
 
         query = "INSERT INTO missions (mission_id, mission_title, mission_date, mission_status, client_id, field_id, mission_type) VALUES (%s, %s, %s, %s, %s, %s, 'General')"
-        if self.db.execute_query(query, (m_id, title, date, status, client, field)):
+        success, err = self.db.execute_query(query, (m_id, title, date, status, client, field))
+        if success:
             messagebox.showinfo("Success", "Mission added successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to add mission:\n{err}")
 
     def update_mission(self):
         m_id = self.entry_id.get()
@@ -148,10 +152,13 @@ class MissionsFrame(ctk.CTkFrame):
             return
 
         query = "UPDATE missions SET mission_title=%s, mission_date=%s, mission_status=%s, client_id=%s, field_id=%s WHERE mission_id=%s"
-        if self.db.execute_query(query, (title, date, status, client, field, m_id)):
+        success, err = self.db.execute_query(query, (title, date, status, client, field, m_id))
+        if success:
             messagebox.showinfo("Success", "Mission updated successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to update mission:\n{err}")
 
     def delete_mission(self):
         m_id = self.entry_id.get()
@@ -160,10 +167,13 @@ class MissionsFrame(ctk.CTkFrame):
             return
 
         query = "DELETE FROM missions WHERE mission_id = %s"
-        if self.db.execute_query(query, (m_id,)):
+        success, err = self.db.execute_query(query, (m_id,))
+        if success:
             messagebox.showinfo("Success", "Mission deleted successfully.")
             self.load_data()
             self.clear_entries()
+        else:
+            messagebox.showerror("Database Error", f"Failed to delete mission:\n{err}")
 
     def clear_entries(self):
         self.entry_id.delete(0, 'end')
