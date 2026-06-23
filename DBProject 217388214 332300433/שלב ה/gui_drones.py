@@ -15,12 +15,12 @@ class DronesFrame(ctk.CTkFrame):
         self.tree_frame = ctk.CTkFrame(self)
         self.tree_frame.pack(fill="both", expand=True, padx=20, pady=10)
 
-        columns = ("ID", "Model Name", "Purchase Date", "Status")
+        columns = ("ID", "Serial Number", "Model Name", "Purchase Date", "Status")
         self.tree = ttk.Treeview(self.tree_frame, columns=columns, show="headings", height=8)
         
         for col in columns:
             self.tree.heading(col, text=col)
-            self.tree.column(col, width=150)
+            self.tree.column(col, width=120)
             
         self.tree.pack(fill="both", expand=True)
 
@@ -37,17 +37,22 @@ class DronesFrame(ctk.CTkFrame):
         self.btn_fetch.grid(row=0, column=2, padx=10, pady=5)
 
         # Row 2: Other fields
-        ctk.CTkLabel(self.form_frame, text="Model ID (for Insert):").grid(row=1, column=0, padx=10, pady=5)
+        ctk.CTkLabel(self.form_frame, text="Serial Number:").grid(row=1, column=0, padx=10, pady=5)
+        self.entry_serial = ctk.CTkEntry(self.form_frame, width=120)
+        self.entry_serial.grid(row=1, column=1, padx=10, pady=5)
+
+        ctk.CTkLabel(self.form_frame, text="Model ID (for Insert):").grid(row=1, column=2, padx=10, pady=5)
         self.entry_model_id = ctk.CTkEntry(self.form_frame, width=100)
-        self.entry_model_id.grid(row=1, column=1, padx=10, pady=5)
+        self.entry_model_id.grid(row=1, column=3, padx=10, pady=5)
 
-        ctk.CTkLabel(self.form_frame, text="Purchase Date (YYYY-MM-DD):").grid(row=1, column=2, padx=10, pady=5)
-        self.entry_date = ctk.CTkEntry(self.form_frame, width=150)
-        self.entry_date.grid(row=1, column=3, padx=10, pady=5)
+        # Row 3: More fields
+        ctk.CTkLabel(self.form_frame, text="Purchase Date (YYYY-MM-DD):").grid(row=2, column=0, padx=10, pady=5)
+        self.entry_date = ctk.CTkEntry(self.form_frame, width=120)
+        self.entry_date.grid(row=2, column=1, padx=10, pady=5)
 
-        ctk.CTkLabel(self.form_frame, text="Status:").grid(row=1, column=4, padx=10, pady=5)
+        ctk.CTkLabel(self.form_frame, text="Status:").grid(row=2, column=2, padx=10, pady=5)
         self.entry_status = ctk.CTkEntry(self.form_frame, width=100)
-        self.entry_status.grid(row=1, column=5, padx=10, pady=5)
+        self.entry_status.grid(row=2, column=3, padx=10, pady=5)
 
         # --- Action Buttons ---
         self.actions_frame = ctk.CTkFrame(self)
@@ -71,14 +76,14 @@ class DronesFrame(ctk.CTkFrame):
             self.tree.delete(row)
             
         query = '''
-            SELECT d.drone_id, dm.model_name, d.purchase_date, d.drone_status
+            SELECT d.drone_id, d.serial_number, dm.model_name, d.purchase_date, d.drone_status
             FROM drones d
             JOIN drone_models dm ON d.model_id = dm.model_id
             ORDER BY d.drone_id ASC
         '''
         records = self.db.fetch_all(query)
         for r in records:
-            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3]))
+            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3], r[4]))
 
     def fetch_for_update(self):
         """Requirement: User types ID, system brings the rest of the fields"""
@@ -87,34 +92,38 @@ class DronesFrame(ctk.CTkFrame):
             messagebox.showwarning("Input Error", "Please enter a Drone ID to fetch.")
             return
 
-        query = "SELECT model_id, purchase_date, drone_status FROM drones WHERE drone_id = %s"
+        query = "SELECT serial_number, model_id, purchase_date, drone_status FROM drones WHERE drone_id = %s"
         records = self.db.fetch_all(query, (d_id,))
         if records:
             rec = records[0]
+            self.entry_serial.delete(0, 'end')
+            self.entry_serial.insert(0, rec[0])
+
             self.entry_model_id.delete(0, 'end')
-            self.entry_model_id.insert(0, rec[0])
+            self.entry_model_id.insert(0, rec[1])
             
             self.entry_date.delete(0, 'end')
-            self.entry_date.insert(0, rec[1])
+            self.entry_date.insert(0, rec[2])
             
             self.entry_status.delete(0, 'end')
-            self.entry_status.insert(0, rec[2])
+            self.entry_status.insert(0, rec[3])
             messagebox.showinfo("Success", "Data fetched! You can now edit the fields and click Update.")
         else:
             messagebox.showerror("Not Found", f"Drone ID {d_id} not found.")
 
     def add_drone(self):
         d_id = self.entry_id.get()
+        serial = self.entry_serial.get()
         m_id = self.entry_model_id.get()
         date = self.entry_date.get()
         status = self.entry_status.get() or 'Available'
 
-        if not (d_id and m_id and date):
-            messagebox.showwarning("Input Error", "ID, Model ID, and Date are required.")
+        if not (d_id and serial and m_id and date):
+            messagebox.showwarning("Input Error", "ID, Serial, Model ID, and Date are required.")
             return
 
-        query = "INSERT INTO drones (drone_id, model_id, purchase_date, drone_status) VALUES (%s, %s, %s, %s)"
-        success, err = self.db.execute_query(query, (d_id, m_id, date, status))
+        query = "INSERT INTO drones (drone_id, serial_number, model_id, purchase_date, drone_status) VALUES (%s, %s, %s, %s, %s)"
+        success, err = self.db.execute_query(query, (d_id, serial, m_id, date, status))
         if success:
             messagebox.showinfo("Success", "Drone added successfully.")
             self.load_data()
@@ -124,6 +133,7 @@ class DronesFrame(ctk.CTkFrame):
 
     def update_drone(self):
         d_id = self.entry_id.get()
+        serial = self.entry_serial.get()
         m_id = self.entry_model_id.get()
         date = self.entry_date.get()
         status = self.entry_status.get()
@@ -132,8 +142,8 @@ class DronesFrame(ctk.CTkFrame):
             messagebox.showwarning("Input Error", "Drone ID is required to update.")
             return
 
-        query = "UPDATE drones SET model_id=%s, purchase_date=%s, drone_status=%s WHERE drone_id=%s"
-        success, err = self.db.execute_query(query, (m_id, date, status, d_id))
+        query = "UPDATE drones SET serial_number=%s, model_id=%s, purchase_date=%s, drone_status=%s WHERE drone_id=%s"
+        success, err = self.db.execute_query(query, (serial, m_id, date, status, d_id))
         if success:
             messagebox.showinfo("Success", "Drone updated successfully.")
             self.load_data()
@@ -158,6 +168,7 @@ class DronesFrame(ctk.CTkFrame):
 
     def clear_entries(self):
         self.entry_id.delete(0, 'end')
+        self.entry_serial.delete(0, 'end')
         self.entry_model_id.delete(0, 'end')
         self.entry_date.delete(0, 'end')
         self.entry_status.delete(0, 'end')

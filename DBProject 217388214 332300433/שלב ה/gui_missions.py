@@ -14,12 +14,12 @@ class MissionsFrame(ctk.CTkFrame):
         self.tree_frame = ctk.CTkFrame(self)
         self.tree_frame.pack(fill="both", expand=True, padx=20, pady=10)
 
-        columns = ("ID", "Title", "Date", "Status", "Client Name", "Field ID")
+        columns = ("ID", "Title", "Date", "Status", "Client Name", "Type", "Desc", "Field ID")
         self.tree = ttk.Treeview(self.tree_frame, columns=columns, show="headings", height=8)
         
         for col in columns:
             self.tree.heading(col, text=col)
-            self.tree.column(col, width=120)
+            self.tree.column(col, width=90)
             
         self.tree.pack(fill="both", expand=True)
 
@@ -50,12 +50,21 @@ class MissionsFrame(ctk.CTkFrame):
         
         # Row 3: More fields
         ctk.CTkLabel(self.form_frame, text="Client ID:").grid(row=2, column=0, padx=5, pady=5)
-        self.entry_client = ctk.CTkEntry(self.form_frame, width=120)
+        self.entry_client = ctk.CTkEntry(self.form_frame, width=80)
         self.entry_client.grid(row=2, column=1, padx=5, pady=5)
 
-        ctk.CTkLabel(self.form_frame, text="Field ID:").grid(row=2, column=2, padx=5, pady=5)
-        self.entry_field = ctk.CTkEntry(self.form_frame, width=100)
-        self.entry_field.grid(row=2, column=3, padx=5, pady=5)
+        ctk.CTkLabel(self.form_frame, text="Type:").grid(row=2, column=2, padx=5, pady=5)
+        self.entry_type = ctk.CTkEntry(self.form_frame, width=100)
+        self.entry_type.grid(row=2, column=3, padx=5, pady=5)
+
+        ctk.CTkLabel(self.form_frame, text="Field ID:").grid(row=2, column=4, padx=5, pady=5)
+        self.entry_field = ctk.CTkEntry(self.form_frame, width=80)
+        self.entry_field.grid(row=2, column=5, padx=5, pady=5)
+
+        # Row 4: Description
+        ctk.CTkLabel(self.form_frame, text="Description:").grid(row=3, column=0, padx=5, pady=5)
+        self.entry_desc = ctk.CTkEntry(self.form_frame, width=300)
+        self.entry_desc.grid(row=3, column=1, columnspan=5, sticky="w", padx=5, pady=5)
 
         # --- Action Buttons ---
         self.actions_frame = ctk.CTkFrame(self)
@@ -79,15 +88,16 @@ class MissionsFrame(ctk.CTkFrame):
             
         # JOIN with clients to show Client_Name instead of Client_ID
         query = '''
-            SELECT m.mission_id, m.mission_title, m.mission_date, m.mission_status, c.client_name, m.field_id
+            SELECT m.mission_id, m.mission_title, m.mission_date, m.mission_status, 
+                   c.client_name, m.mission_type, m.mission_description, m.field_id
             FROM missions m
             JOIN clients c ON m.client_id = c.client_id
             ORDER BY m.mission_id ASC
         '''
         records = self.db.fetch_all(query)
         for r in records:
-            field_val = r[5] if r[5] is not None else ""
-            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3], r[4], field_val))
+            field_val = r[7] if r[7] is not None else ""
+            self.tree.insert("", "end", values=(r[0], r[1], r[2], r[3], r[4], r[5], r[6], field_val))
 
     def fetch_for_update(self):
         m_id = self.entry_id.get()
@@ -95,7 +105,7 @@ class MissionsFrame(ctk.CTkFrame):
             messagebox.showwarning("Input Error", "Please enter a Mission ID to fetch.")
             return
 
-        query = "SELECT mission_title, mission_date, mission_status, client_id, field_id FROM missions WHERE mission_id = %s"
+        query = "SELECT mission_title, mission_date, mission_status, client_id, field_id, mission_type, mission_description FROM missions WHERE mission_id = %s"
         records = self.db.fetch_all(query, (m_id,))
         if records:
             rec = records[0]
@@ -113,6 +123,12 @@ class MissionsFrame(ctk.CTkFrame):
             
             self.entry_field.delete(0, 'end')
             self.entry_field.insert(0, rec[4] if rec[4] is not None else "")
+
+            self.entry_type.delete(0, 'end')
+            self.entry_type.insert(0, rec[5])
+
+            self.entry_desc.delete(0, 'end')
+            self.entry_desc.insert(0, rec[6])
             
             messagebox.showinfo("Success", "Data fetched! Edit the fields and click Update.")
         else:
@@ -125,13 +141,15 @@ class MissionsFrame(ctk.CTkFrame):
         status = self.entry_status.get() or 'Pending'
         client = self.entry_client.get()
         field = self.entry_field.get() or None
+        m_type = self.entry_type.get() or 'General'
+        desc = self.entry_desc.get() or 'No description'
 
         if not (m_id and title and date and client):
             messagebox.showwarning("Input Error", "ID, Title, Date, and Client ID are required.")
             return
 
-        query = "INSERT INTO missions (mission_id, mission_title, mission_date, mission_status, client_id, field_id, mission_type) VALUES (%s, %s, %s, %s, %s, %s, 'General')"
-        success, err = self.db.execute_query(query, (m_id, title, date, status, client, field))
+        query = "INSERT INTO missions (mission_id, mission_title, mission_date, mission_status, client_id, field_id, mission_type, mission_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        success, err = self.db.execute_query(query, (m_id, title, date, status, client, field, m_type, desc))
         if success:
             messagebox.showinfo("Success", "Mission added successfully.")
             self.load_data()
@@ -146,13 +164,15 @@ class MissionsFrame(ctk.CTkFrame):
         status = self.entry_status.get()
         client = self.entry_client.get()
         field = self.entry_field.get() or None
+        m_type = self.entry_type.get()
+        desc = self.entry_desc.get()
 
         if not m_id:
             messagebox.showwarning("Input Error", "Mission ID is required to update.")
             return
 
-        query = "UPDATE missions SET mission_title=%s, mission_date=%s, mission_status=%s, client_id=%s, field_id=%s WHERE mission_id=%s"
-        success, err = self.db.execute_query(query, (title, date, status, client, field, m_id))
+        query = "UPDATE missions SET mission_title=%s, mission_date=%s, mission_status=%s, client_id=%s, field_id=%s, mission_type=%s, mission_description=%s WHERE mission_id=%s"
+        success, err = self.db.execute_query(query, (title, date, status, client, field, m_type, desc, m_id))
         if success:
             messagebox.showinfo("Success", "Mission updated successfully.")
             self.load_data()
@@ -182,3 +202,5 @@ class MissionsFrame(ctk.CTkFrame):
         self.entry_status.delete(0, 'end')
         self.entry_client.delete(0, 'end')
         self.entry_field.delete(0, 'end')
+        self.entry_type.delete(0, 'end')
+        self.entry_desc.delete(0, 'end')
